@@ -3,23 +3,21 @@
 <head>
 <meta charset="utf-8" />
   <style>html{margin:0;padding:0}body{margin:0;padding:0}*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-  /* ══ Receipt Logo Banner ══ */
-  .receipt { overflow: hidden !important; }
+  /* ══ Receipt & Document Logo — deep green, professional ══ */
   .receipt-logo-banner {
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    background: linear-gradient(135deg, #064d3a, #0a6b52);
-    border-radius: 18px 18px 0 0;
+    background: #ffffff;
+    border-bottom: 2px solid #064d3a;
     padding: 10px 18px;
     display: flex;
     align-items: center;
-    z-index: 2;
   }
   .receipt-logo-banner img {
-    height: 30px;
+    height: 26px;
     width: auto;
-    max-width: 160px;
+    max-width: 140px;
     object-fit: contain;
+    filter: brightness(0) saturate(100%) invert(16%) sepia(60%) saturate(900%) hue-rotate(130deg) brightness(90%) contrast(110%);
+    -webkit-filter: brightness(0) saturate(100%) invert(16%) sepia(60%) saturate(900%) hue-rotate(130deg) brightness(90%) contrast(110%);
   }
 </style>
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,viewport-fit=cover" />
@@ -308,7 +306,7 @@
     margin-bottom: 0;
   }
   .welcome-logo-circle {
-    width: 60px; height: 60px;
+    width: 44px; height: 44px;
     border-radius: 50%;
     border: 1.5px solid rgba(189,248,232,0.22);
     background: rgba(189,248,232,0.06);
@@ -1014,7 +1012,7 @@
     display:flex;align-items:center;justify-content:center;
   }
   .pl-logo-wrap img{
-    height:60px;width:auto;max-width:240px;object-fit:contain;
+    height:44px;width:auto;max-width:180px;object-fit:contain;
   }
   .pl-spinner{width:72px;height:72px;position:relative}
   .pl-arc{
@@ -1863,7 +1861,7 @@
   .close-x{position:absolute;top:18px;right:18px;width:32px;height:32px;border-radius:50%;background:rgba(255,255,255,.08);display:flex;align-items:center;justify-content:center;color:#fff;cursor:pointer;font-size:17px}
 
   /* Receipt */
-  .receipt{background:#fff;color:#000;border-radius:18px;padding:56px 24px 24px;text-align:center;position:relative;font-family:var(--font-ui)}
+  .receipt{background:#fff;color:#000;border-radius:18px;padding:24px;text-align:center;position:relative;font-family:var(--font-ui)}
   .receipt::before,.receipt::after{content:"";position:absolute;left:-10px;width:20px;height:20px;background:#0e1614;border-radius:50%}
   .receipt::before{top:40%}.receipt::after{top:60%}
   .receipt .check-c{width:64px;height:64px;border-radius:50%;background:#d6f7e6;color:#0d8a4f;display:flex;align-items:center;justify-content:center;margin:0 auto 12px;font-size:23px}
@@ -2027,8 +2025,8 @@
   }
   #splash .sp-wordmark .sp-title img.sp-inline-logo {
     width: auto;
-    height: 52px;
-    max-width: 280px;
+    height: 38px;
+    max-width: 220px;
     object-fit: contain;
     filter: none;
     flex-shrink: 0;
@@ -3946,7 +3944,7 @@ const welcomeSlides = [
     sub:'Move your money across the world with no limits.',
     visual:`<div style="display:flex;align-items:flex-end;justify-content:center;width:100%;height:100%;padding-bottom:20px">
       <div style="width:72%;max-width:270px;aspect-ratio:1.6/1;border-radius:20px;background:linear-gradient(135deg,#0f3631 0%,#1a4a42 60%,#062a25 100%);position:relative;box-shadow:0 30px 80px rgba(0,0,0,.7);padding:18px 20px;display:flex;flex-direction:column;justify-content:space-between;">
-        <div style="display:flex;align-items:center;"><img src="${_LOGO}" style="height:40px;width:auto;max-width:220px;object-fit:contain" alt="bank36"></div>
+        <div style="display:flex;align-items:center;"><img src="${_LOGO}" style="height:28px;width:auto;max-width:180px;object-fit:contain" alt="bank36"></div>
         <div>
           <div style="font-size:13px;letter-spacing:2px;color:rgba(255,255,255,0.5);margin-bottom:6px">•••• •••• •••• 4821</div>
           <div style="font-size:13px;letter-spacing:0.3px;color:#dfeae6">JOHN CARTER</div>
@@ -4841,7 +4839,7 @@ views.cards = () => {
             <path d="M 0 0 L 148 0 C 118 20 82 58 98 102 C 114 148 158 202 116 202 L 0 202 Z" fill="white" fill-opacity="0.028"/>
           </svg>
           <!-- Bank name / logo top-left -->
-          <div class="brand-tl">${c2.kind==='existing' ? `<span style="font-family:'Inter',system-ui,sans-serif;font-size:15px;font-weight:700;letter-spacing:.5px;color:#fff">${c2.bank||'External'}</span>` : `<img src="${_LOGO}" style="height:36px;width:auto;max-width:180px;object-fit:contain" alt="bank36">`}</div>
+          <div class="brand-tl">${c2.kind==='existing' ? `<span style="font-family:'Inter',system-ui,sans-serif;font-size:15px;font-weight:700;letter-spacing:.5px;color:#fff">${c2.bank||'External'}</span>` : `<img src="${_LOGO}" style="height:24px;width:auto;max-width:140px;object-fit:contain" alt="bank36">`}</div>
           <!-- Card type top-right -->
           <div style="position:absolute;top:16px;right:20px;text-align:right;z-index:4">
             <div style="font-size:14px;font-weight:900;letter-spacing:2px;color:#fff;text-shadow:0 1px 6px rgba(0,0,0,.8);line-height:1">${c2.kind==='virtual'?'VIRTUAL':c2.kind==='grant'?'GRANT':'BLACK'}</div>
@@ -9609,7 +9607,7 @@ window._vcReview = function() {
   var netLabel = network === 'MASTERCARD' ? 'MASTERCARD' : network === 'AMEX' ? 'AMEX' : 'VISA';
   window._vcPending = { kind:'virtual', type:'Virtual', cls:cls, name:(userData.name||'').toUpperCase(), num:num, fullNum:fullNum, cvv:cvv, exp:exp, label:label, network:netLabel, bank:'bank36' };
 
-  var logoImg = '<img src="' + _LOGO + '" style="height:36px;width:auto;max-width:180px;object-fit:contain" alt="bank36">';
+  var logoImg = '<img src="' + _LOGO + '" style="height:24px;width:auto;max-width:140px;object-fit:contain" alt="bank36">';
   var networkLogoHtml = netLabel === 'MASTERCARD'
     ? '<svg width="38" height="24" viewBox="0 0 38 24" fill="none"><circle cx="14" cy="12" r="10" fill="#EB001B" fill-opacity="0.9"/><circle cx="24" cy="12" r="10" fill="#F79E1B" fill-opacity="0.9"/><path d="M19 4.87A10 10 0 0 1 23.13 12 10 10 0 0 1 19 19.13 10 10 0 0 1 14.87 12 10 10 0 0 1 19 4.87Z" fill="#FF5F00" fill-opacity="0.9"/></svg>'
     : '<span style="font-style:italic;font-weight:900;font-size:18px;letter-spacing:.6px">' + netLabel + '</span>';
@@ -10601,9 +10599,9 @@ function openReceipt(t, opts){
       <div style="display:flex;justify-content:center;padding:10px 0 0"><div style="width:36px;height:4px;background:#e0e0e0;border-radius:3px"></div></div>
 
       <!-- App logo - top-left, bold & clearly visible -->
-      <div style="padding:18px 20px 0;display:flex;align-items:center;gap:10px">
-        <img src="${window._LOGO || ''}" alt="${window._APP_NAME || 'bank36'}" style="height:60px;width:auto;max-width:240px;object-fit:contain;display:block" onerror="this.style.display='none'">
-        <span style="font-size:20px;font-weight:900;color:#111;letter-spacing:-.5px">${window._APP_NAME || 'bank36'}</span>
+      <div style="padding:18px 20px 0;display:flex;align-items:center">
+        <img src="${window._LOGO || ''}" alt="${window._APP_NAME || 'bank36'}" style="height:32px;width:auto;max-width:160px;object-fit:contain;display:block;filter:brightness(0) saturate(100%) invert(16%) sepia(60%) saturate(900%) hue-rotate(130deg) brightness(90%) contrast(110%)" onerror="this.style.display:'none'">
+        
       </div>
       <div style="padding:8px 20px 0;text-align:center">
         <!-- Green circle checkmark -->
@@ -10669,7 +10667,7 @@ function openReceipt(t, opts){
       </div>
       <!-- DONE button -->
       <div style="padding:4px 20px 28px">
-        <button onclick="closeSheet()" style="width:100%;padding:14px;background:#1a2547;color:#fff;border:none;border-radius:28px;font-size:15px;font-weight:800;cursor:pointer;letter-spacing:.5px;font-family:inherit">DONE</button>
+        <button onclick="closeSheet()" style="width:100%;padding:14px;background:#064d3a;color:#fff;border:none;border-radius:28px;font-size:15px;font-weight:800;cursor:pointer;letter-spacing:.5px;font-family:inherit">DONE</button>
       </div>
     </div>
   </div>`;
