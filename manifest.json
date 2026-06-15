@@ -4,8 +4,8 @@
   "description": "Open an account in minutes",
   "start_url": "./index.html",
   "display": "standalone",
-  "background_color": "#000000",
-  "theme_color": "#0a0f0d",
+  "background_color": "#2E443F",
+  "theme_color": "#172220",
   "orientation": "portrait-primary",
   "categories": ["finance"],
   "icons": [
