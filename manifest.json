@@ -5,7 +5,7 @@
   "start_url": "./index.html",
   "display": "standalone",
   "background_color": "#2E443F",
-  "theme_color": "#091210",
+  "theme_color": "#0a0f0d",
   "orientation": "portrait-primary",
   "categories": ["finance"],
   "icons": [
