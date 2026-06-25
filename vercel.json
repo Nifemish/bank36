@@ -1,0 +1,12 @@
+{
+  "rewrites": [
+    {
+      "source": "/api/adm/service-call",
+      "destination": "/api/adm/service-call"
+    },
+    {
+      "source": "/((?!api/).*)",
+      "destination": "/index.html"
+    }
+  ]
+}
