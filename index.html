@@ -1758,7 +1758,7 @@ html{margin:0;padding:0}body{margin:0;padding:0}*{box-sizing:border-box;-webkit-
 
 
   /* ===== Dashboard & App Styles (from original) ===== */
-  .dash-top{position:sticky;top:calc(var(--app-top-space) + env(safe-area-inset-top,0px));z-index:20;display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;padding:14px 0 12px;background:linear-gradient(180deg,#080f0f 70%,transparent);}
+  .dash-top{position:relative;top:auto;z-index:20;display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;padding:14px 0 12px;background:linear-gradient(180deg,#080f0f 70%,transparent);}
   .avatar{width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,#a8d4cc,#7fb5ac);display:flex;align-items:center;justify-content:center;color:#06231e;font-weight:800;font-family:var(--font-heading);font-size:16px;cursor:pointer}
   .greet{font-size:14px;color:#a8b3b0}
   .greet b{display:block;color:#fff;font-size:16px;font-weight:700;margin-top:2px}
@@ -13901,6 +13901,8 @@ function go(name){
   viewEl.classList.add('page-enter');
   viewEl.addEventListener('animationend', () => viewEl.classList.remove('page-enter'), { once: true });
 
+  const appEl = document.getElementById('app');
+  if (appEl) appEl.scrollTop = 0;
   window.scrollTo(0,0);
   bind();
   if(name==='otp') startOtp();
