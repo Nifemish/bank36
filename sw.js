@@ -9,7 +9,7 @@
 // ── 1. VERSION — increment this string on every release ──────────────────
 //    You can automate this with a build step (e.g. sed, vite-plugin, etc.)
 //    but even manual bumping works perfectly.
-const CACHE_VERSION = 'bank36-v5';
+const CACHE_VERSION = 'bank36-v6';
 
 // ── 2. ASSETS TO PRE-CACHE (shell) ───────────────────────────────────────
 //    Keep this list lean — only the files needed to render the first screen.
